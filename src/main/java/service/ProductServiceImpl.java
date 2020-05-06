@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
         return false;
     }
 
-    public boolean isProductExist(long id) {
+    public boolean isProductExist(Long id) {
         for (Product productId : products) {
             if (productId.getId() == id) {
                 return true;

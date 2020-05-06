@@ -1,0 +1,19 @@
+package utilities;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class FileUtilites {
+
+    public static void createNewFiles(String fileName) throws IOException {
+        File file = new File(fileName);
+        file.createNewFile();
+    }
+
+    public static void clearFile(String fileName) throws FileNotFoundException {
+        PrintWriter printWriter = new PrintWriter(fileName);
+        printWriter.close();
+    }
+}
