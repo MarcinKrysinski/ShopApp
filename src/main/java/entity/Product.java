@@ -2,6 +2,8 @@ package entity;
 
 public class Product {
 
+    public final static String separator = "  ";
+
     private long id;
     private String productName;
     private double price;
@@ -50,4 +52,8 @@ public class Product {
         return color;
     }
 
+    @Override
+    public String toString() {
+        return id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
+    }
 }

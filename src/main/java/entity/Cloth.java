@@ -18,4 +18,9 @@ public class Cloth extends Product {
     public String getMaterial() {
         return material;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + separator + size +separator + material;
+    }
 }

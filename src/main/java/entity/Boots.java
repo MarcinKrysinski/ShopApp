@@ -18,4 +18,9 @@ public class Boots extends Product {
     public boolean isNatural() {
         return isNatural;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + separator + size + separator + isNatural;
+    }
 }
