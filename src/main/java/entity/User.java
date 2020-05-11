@@ -2,6 +2,8 @@ package entity;
 
 public class User {
 
+    public final static String separator = "  ";
+
     private long id;
     private String login;
     private String password;
@@ -22,5 +24,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return id + login + password;
     }
 }

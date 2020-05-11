@@ -1,7 +1,7 @@
 package DAO;
 
 import api.ProductDAO;
-import entity.ConvertStringToProduct;
+import entity.Parse.ProductParser;
 import entity.Product;
 import utilities.FileUtilites;
 
@@ -26,21 +26,22 @@ public class ProductDAOImpl implements ProductDAO {
         saveProducts(productsList);
     }
 
-    public void saveProducts(List<Product> products) throws FileNotFoundException {
+    public void saveProducts(List<Product> productsList) throws FileNotFoundException {
         FileUtilites.clearFile(fileName);
         PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
-        for (Product iProduct: products) {
+        for (Product iProduct: productsList) {
             printWriter.write(iProduct.toString() + "\n");
         }
         printWriter.close();
     }
 
-    public void removeProductById(Long id) throws IOException {
+    public void removeProductById(long id) throws IOException {
         List<Product> productsList = getAllProducts();
 
         for (Product iProduct: productsList) {
             if (iProduct.getId() == id){
-                removeProductById(id);
+                productsList.remove(id);
+                break;
             }
         }
         saveProducts(productsList);
@@ -65,8 +66,8 @@ public class ProductDAOImpl implements ProductDAO {
         BufferedReader reader = new BufferedReader(fileReader);
         String readOneLineFromFile = reader.readLine();
         while(readOneLineFromFile != null) {
-            Product product = ConvertStringToProduct.convertStringToProduct(productType, readOneLineFromFile);
-            System.out.println(readOneLineFromFile);
+            Product product = ProductParser.convertStringToProduct(productType, readOneLineFromFile);
+//            System.out.println(readOneLineFromFile);
             readOneLineFromFile = reader.readLine();
             if (product !=null ){
                 productList.add(product);
@@ -76,13 +77,30 @@ public class ProductDAOImpl implements ProductDAO {
         return productList;
     }
 
-    public Product getProductById(Long id) {
+
+    public Product getProductById(long id) throws IOException {
+        List<Product> productList = getAllProducts();
+
+        for (Product iProduct:productList) {
+            if (iProduct.getId() == id){
+                return iProduct;
+            }
+        }
         return null;
     }
 
-    public Product getProductByName(String productName) {
+    public Product getProductByName(String productName) throws IOException {
+        List<Product> productList = getAllProducts();
+
+        for (Product iProduct : productList) {
+            if(ProductParser.toUpperCase(productName).equals(ProductParser.toUpperCase(iProduct.getProductName()))) {
+                return iProduct;
+            }
+        }
         return null;
     }
+
+
 
 
 }

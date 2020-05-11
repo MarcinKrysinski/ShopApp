@@ -11,7 +11,7 @@ public interface ProductService {
     Product getProductByName(String productName);
     boolean isProductAvailable(String productName);
     boolean isProductExist(String productName);
-    boolean isProductExist(Long id);
+    boolean isProductExist(long id);
 
 
 }

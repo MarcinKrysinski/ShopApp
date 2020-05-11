@@ -16,17 +16,20 @@ public class Main {
         List<Product> bootsList = new ArrayList<Product>();
         bootsList.add(new Boots(1L, "Boots", 99.99, 0.5, "Black", 15, 43, true));
         bootsList.add(new Boots(2L, "Boots2", 59.99, 0.5, "Green", 25, 41, false));
-        bootsList.add(new Boots(3L, "Boots3", 69.99, 0.5, "White", 05, 39, true));
+        bootsList.add(new Boots(3L, "Boots3", 69.99, 0.5, "White", 5, 39, true));
 
 
         ProductDAO productClothDao = new ProductDAOImpl("clothes", "CLOTH");
         productClothDao.saveProduct(cloth);
 
         ProductDAO productBootsDao = new ProductDAOImpl("boots", "BOOTS");
-        productBootsDao.saveProducts(bootsList);
-        productBootsDao.removeProductByName("Boots2");
-        productBootsDao.saveProducts(bootsList);
-        productBootsDao.getAllProducts();
+//        productBootsDao.saveProducts(bootsList);
+//        productBootsDao.removeProductByName("Boots2");
+//        productBootsDao.getAllProducts();
+//        productBootsDao.saveProducts(productBootsDao.getAllProducts());
+//        productBootsDao.getAllProducts();
+        Product test = productBootsDao.getProductByName("BOoTS3");
+        System.out.println(test);
 
 
 
