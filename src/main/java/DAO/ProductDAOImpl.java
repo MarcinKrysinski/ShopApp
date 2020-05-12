@@ -17,7 +17,11 @@ public class ProductDAOImpl implements ProductDAO {
     public ProductDAOImpl(String fileName, String productType) throws IOException {
         this.fileName = fileName;
         this.productType = productType;
-        FileUtilites.createNewFiles(fileName);
+        try {
+            FileUtilites.createNewFiles(fileName);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     public void saveProduct(Product product) throws IOException {

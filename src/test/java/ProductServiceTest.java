@@ -20,10 +20,10 @@ public class ProductServiceTest {
 
         //then
         ProductServiceImpl productService = new ProductServiceImpl(productList);
-        List<Product> ProductFromTestClass = productService.getAllProducts();
+        List<Product> productFromTestClass = productService.getAllProducts();
 
         //when
-        Assertions.assertEquals(productList, ProductFromTestClass);
+        Assertions.assertEquals(productList, productFromTestClass);
     }
 
     @Test
@@ -36,9 +36,9 @@ public class ProductServiceTest {
         double countProductOnTheList = productList.size();
 
         //then
-        ProductServiceImpl ProductService = new ProductServiceImpl(productList);
-        List<Product> ProductFromTestClass = ProductService.getAllProducts();
-        double countProductOnTheListFromTestClass = ProductFromTestClass.size();
+        ProductServiceImpl productService = new ProductServiceImpl(productList);
+        List<Product> productFromTestClass = productService.getAllProducts();
+        double countProductOnTheListFromTestClass = productFromTestClass.size();
 
         //when
         Assertions.assertEquals(countProductOnTheList, countProductOnTheListFromTestClass);
@@ -55,8 +55,8 @@ public class ProductServiceTest {
         productList.add(cloth);
 
         //then
-        ProductServiceImpl ProductService = new ProductServiceImpl(productList);
-        Product product = ProductService.getProductByName("T-shirt");
+        ProductServiceImpl productService = new ProductServiceImpl(productList);
+        Product product = productService.getProductByName("T-shirt");
 
         //when
         Assertions.assertEquals(cloth, product);
@@ -72,8 +72,8 @@ public class ProductServiceTest {
         productList.add(cloth);
 
         //then
-        ProductServiceImpl ProductService = new ProductServiceImpl(productList);
-        Product product = ProductService.getProductByName("Rower");
+        ProductServiceImpl productService = new ProductServiceImpl(productList);
+        Product product = productService.getProductByName("Rower");
 
         //when
         Assertions.assertNull(product);
@@ -89,8 +89,8 @@ public class ProductServiceTest {
         productList.add(cloth);
 
         //then
-        ProductServiceImpl ProductService = new ProductServiceImpl(productList);
-        boolean isProductOnTheShopByName = ProductService.isProductOnTheShopByName("T-shirt");
+        ProductServiceImpl productService = new ProductServiceImpl(productList);
+        boolean isProductOnTheShopByName = productService.isProductOnTheShopByName("T-shirt");
 
         //when
         Assertions.assertTrue(isProductOnTheShopByName);
@@ -106,8 +106,8 @@ public class ProductServiceTest {
         productList.add(cloth);
 
         //then
-        ProductServiceImpl ProductService = new ProductServiceImpl(productList);
-        boolean isProductOnTheShopByName = ProductService.isProductOnTheShopByName("Rower");
+        ProductServiceImpl productService = new ProductServiceImpl(productList);
+        boolean isProductOnTheShopByName = productService.isProductOnTheShopByName("Rower");
 
         //when
         Assertions.assertFalse(isProductOnTheShopByName);
