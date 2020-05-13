@@ -11,11 +11,11 @@ import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
 
-    private final String fileName;
+    private final String fileName = "boots";
     private final String productType;
 
     public ProductDAOImpl(String fileName, String productType) throws IOException {
-        this.fileName = fileName;
+//        this.fileName = fileName;
         this.productType = productType;
         try {
             FileUtilites.createNewFiles(fileName);

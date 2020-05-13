@@ -9,9 +9,17 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     List<User> users;
+    private static UserServiceImpl instance =null;
+
+    public static UserServiceImpl getInstance(){
+        if(instance == null){
+            instance = new UserServiceImpl();
+        }
+        return instance;
+    }
 
     public UserServiceImpl() {
-        this.users = new ArrayList<User>();
+//        this.users = new ArrayList<User>();
     }
 
     public UserServiceImpl(List<User> usersList) {

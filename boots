@@ -1,2 +1,3 @@
-1  Boots  99.99  0.5  Black  15
-3  Boots3  69.99  0.5  White  5
+1  Boots  99.99  0.5  Black  15  43  true
+2  Boots2  59.99  0.5  Green  25  41  false
+3  Boots3  69.99  0.5  White  5  39  true

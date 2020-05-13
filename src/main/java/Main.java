@@ -3,6 +3,7 @@ import api.ProductDAO;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
+import service.ProductServiceImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,14 +24,19 @@ public class Main {
         productClothDao.saveProduct(cloth);
 
         ProductDAO productBootsDao = new ProductDAOImpl("boots", "BOOTS");
-//        productBootsDao.saveProducts(bootsList);
+        productBootsDao.saveProducts(bootsList);
 //        productBootsDao.removeProductByName("Boots2");
 //        productBootsDao.getAllProducts();
 //        productBootsDao.saveProducts(productBootsDao.getAllProducts());
-//        productBootsDao.getAllProducts();
+        List<Product> test2 = productBootsDao.getAllProducts();
         Product test = productBootsDao.getProductByName("BOoTS3");
         System.out.println(test);
+        for (Product product:test2) {
+            System.out.println(product);
+        }
 
+//        ProductServiceImpl productService = new ProductServiceImpl();
+//        productService.getAllProducts();
 
 
     }
