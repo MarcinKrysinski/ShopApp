@@ -40,40 +40,41 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getProductByName(productName);
     }
 
-    public boolean isProductAvailable(String productName) throws IOException {
-        for (Product product: getAllProducts()){
-            if (isProductExist(productName) && product.getProductCount()>0){
-                return true;
+    public boolean isProductAvailable(String productName) {
+        try {
+            for (Product product : getAllProducts()) {
+                if (isProductExist(productName) && product.getProductCount() > 0) {
+                    return true;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return false;
     }
 
-    public boolean isProductExist(String productName) throws IOException {
-        for (Product product :getAllProducts()){
-            if (product.getProductName().equals(productName)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public boolean isProductExist(long id) throws IOException {
+    public boolean isProductExist(String productName) {
         Product product = null;
-        product = productDAO.getProductById(id);
-        if (product == null) {
-            return false;
+        try{
+            product = productDAO.getProductByName(productName);
+        }catch(IOException e){
+            e.printStackTrace();
         }
-        return true;
+
+        return product != null;
     }
 
-    public boolean isProductOnTheShopByName(String productName) throws IOException {
-        for (Product product :getAllProducts()){
-            if (product.getProductName().equals(productName)){
-                return true;
-            }
+
+    public boolean isProductExist(long id) {
+        Product product = null;
+        try{
+            product = productDAO.getProductById(id);
+        }catch(IOException e){
+            e.printStackTrace();
         }
-        return false;
+
+        return product != null;
     }
+
+
 }

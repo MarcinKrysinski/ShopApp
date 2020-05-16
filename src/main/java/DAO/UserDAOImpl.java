@@ -11,10 +11,18 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    private final String fileName;
+    private final String fileName = "data";
+    private static UserDAOImpl instance = null;
 
-    public UserDAOImpl(String fileName) {
-        this.fileName = fileName;
+    public static UserDAOImpl getInstance(){
+        if(instance == null){
+            instance = new UserDAOImpl();
+        }
+        return instance;
+    }
+
+    public UserDAOImpl() {
+
     }
 
 
