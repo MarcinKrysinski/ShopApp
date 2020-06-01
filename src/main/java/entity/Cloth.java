@@ -2,10 +2,12 @@ package entity;
 
 public class Cloth extends Product {
 
+    public final static char productType = 'C';
+
     private String size;
     private String material;
 
-    public Cloth(long id, String productName, double price, double weight, String color, long productCount, String size, String material) {
+    public Cloth(Long id, String productName, Double price, Double weight, String color, Long productCount, String size, String material) {
         super(id, productName, price, weight, color, productCount);
         this.size = size;
         this.material = material;
@@ -21,6 +23,6 @@ public class Cloth extends Product {
 
     @Override
     public String toString() {
-        return super.toString() + separator + size +separator + material;
+        return productType + separator + super.toString() + separator + size +separator + material;
     }
 }

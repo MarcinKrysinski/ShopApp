@@ -2,16 +2,17 @@ package entity;
 
 public class Product {
 
+    public final static char productType = 'P';
     public final static String separator = "  ";
 
-    private long id;
+    private Long id;
     private String productName;
-    private double price;
-    private double weight;
+    private Double price;
+    private Double weight;
     private String color;
-    private long productCount;
+    private Long productCount;
 
-    public Product(long id, String productName, double price, double weight, String color, long productCount) {
+    public Product(Long id, String productName, Double price, Double weight, String color, Long productCount) {
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -20,23 +21,23 @@ public class Product {
         this.productCount = productCount;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public long getProductCount() {
+    public Long getProductCount() {
         return productCount;
     }
 
-    public void setProductCount(long productCount) {
+    public void setProductCount(Long productCount) {
         this.productCount = productCount;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class Product {
         return productName;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
@@ -54,6 +55,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
+        return productType + separator + id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
     }
 }

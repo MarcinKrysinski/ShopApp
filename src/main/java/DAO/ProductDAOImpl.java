@@ -11,18 +11,24 @@ import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
 
-    private final String fileName;
-    private final String productType;
+    private static final String fileName = "data";
+    private static ProductDAOImpl instance = null;
 
-    public ProductDAOImpl(String fileName, String productType) throws IOException {
-        this.fileName = fileName;
-        this.productType = productType;
+    public ProductDAOImpl() throws IOException {
         try {
             FileUtilites.createNewFiles(fileName);
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }
     }
+
+    public static ProductDAOImpl getInstance() throws IOException {
+        if(instance == null){
+            instance = new ProductDAOImpl();
+        }
+        return instance;
+    }
+
 
     public void saveProduct(Product product) throws IOException {
         List<Product> productsList = new ArrayList<Product>();
@@ -39,11 +45,11 @@ public class ProductDAOImpl implements ProductDAO {
         printWriter.close();
     }
 
-    public void removeProductById(long id) throws IOException {
+    public void removeProductById(Long id) throws IOException {
         List<Product> productsList = getAllProducts();
 
         for (Product iProduct: productsList) {
-            if (iProduct.getId() == id){
+            if (iProduct.getId().equals(id)){
                 productsList.remove(id);
                 break;
             }
@@ -70,7 +76,7 @@ public class ProductDAOImpl implements ProductDAO {
         BufferedReader reader = new BufferedReader(fileReader);
         String readOneLineFromFile = reader.readLine();
         while(readOneLineFromFile != null) {
-            Product product = ProductParser.convertStringToProduct(productType, readOneLineFromFile);
+            Product product = ProductParser.convertStringToProduct(readOneLineFromFile);
 //            System.out.println(readOneLineFromFile);
             readOneLineFromFile = reader.readLine();
             if (product !=null ){
@@ -82,11 +88,11 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
 
-    public Product getProductById(long id) throws IOException {
+    public Product getProductById(Long id) throws IOException {
         List<Product> productList = getAllProducts();
 
         for (Product iProduct:productList) {
-            if (iProduct.getId() == id){
+            if (iProduct.getId().equals(id)){
                 return iProduct;
             }
         }

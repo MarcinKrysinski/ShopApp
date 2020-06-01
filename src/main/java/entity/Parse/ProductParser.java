@@ -6,30 +6,31 @@ import entity.Product;
 
 public class ProductParser {
 
-    public static Product convertStringToProduct(String productType, String lineFromProductList){
+    public static Product convertStringToProduct(String productStr){
+        final char productType = productStr.charAt(0);
 
-        if (productType.equals(toUpperCase(productType))) {
-            return lineToObjectProduct(lineFromProductList);
-        }else if (productType.equals(toUpperCase(productType))){
-            return lineToObjectCloth(lineFromProductList);
-        }else if (productType.equals(toUpperCase(productType))){
-            return lineToObjectBoots(lineFromProductList);
+        switch(productType){
+            case 'P':
+                return lineToObjectProduct(productStr);
+            case 'C':
+                return lineToObjectCloth(productStr);
+            case 'B':
+                return lineToObjectBoots(productStr);
         }
-
         return null;
     }
 
     public static Boots lineToObjectBoots(String lineFromProductList){
         String[] productInfo = lineFromProductList.split(Product.separator);
 
-        long id = Long.parseLong(productInfo[0]);
-        String productName = productInfo[1];
-        double price = Double.parseDouble(productInfo[2]);
-        double weight = Double.parseDouble(productInfo[3]);
-        String color = productInfo[4];
-        long productCount = Integer.parseInt(productInfo[5]);
-        int size = Integer.parseInt(productInfo[6]);
-        boolean isNaturalSkin = Boolean.parseBoolean(productInfo[7]);
+        Long id = Long.parseLong(productInfo[1]);
+        String productName = productInfo[2];
+        Double price = Double.parseDouble(productInfo[3]);
+        Double weight = Double.parseDouble(productInfo[4]);
+        String color = productInfo[5];
+        long productCount = Integer.parseInt(productInfo[6]);
+        int size = Integer.parseInt(productInfo[7]);
+        boolean isNaturalSkin = Boolean.parseBoolean(productInfo[8]);
 
         return new Boots(id, productName, price, weight, color, productCount, size, isNaturalSkin);
     }
@@ -37,14 +38,14 @@ public class ProductParser {
     public static Cloth lineToObjectCloth(String lineFromProductList){
         String[] productInfo = lineFromProductList.split(Product.separator);
 
-        long id = Long.parseLong(productInfo[0]);
-        String productName = productInfo[1];
-        double price = Double.parseDouble(productInfo[2]);
-        double weight = Double.parseDouble(productInfo[3]);
-        String color = productInfo[4];
-        long productCount = Integer.parseInt(productInfo[5]);
-        String size = productInfo[6];
-        String material = productInfo[7];
+        long id = Long.parseLong(productInfo[1]);
+        String productName = productInfo[2];
+        double price = Double.parseDouble(productInfo[3]);
+        double weight = Double.parseDouble(productInfo[4]);
+        String color = productInfo[5];
+        long productCount = Integer.parseInt(productInfo[6]);
+        String size = productInfo[7];
+        String material = productInfo[8];
 
         return new Cloth(id, productName, price, weight, color, productCount, size, material);
     }
@@ -52,12 +53,12 @@ public class ProductParser {
     public static Product lineToObjectProduct(String lineFromProductList){
         String[] productInfo = lineFromProductList.split(Product.separator);
 
-        long id = Long.parseLong(productInfo[0]);
-        String productName = productInfo[1];
-        double price = Double.parseDouble(productInfo[2]);
-        double weight = Double.parseDouble(productInfo[3]);
-        String color = productInfo[4];
-        long productCount = Integer.parseInt(productInfo[5]);
+        long id = Long.parseLong(productInfo[1]);
+        String productName = productInfo[2];
+        double price = Double.parseDouble(productInfo[3]);
+        double weight = Double.parseDouble(productInfo[4]);
+        String color = productInfo[5];
+        long productCount = Integer.parseInt(productInfo[6]);
 
         return new Product(id, productName, price, weight, color, productCount);
     }

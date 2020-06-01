@@ -28,6 +28,7 @@ public class UserValidator {
         return instance;
     }
 
+
     public boolean isValid(User user) throws UserShortLengthLoginException, UserShortLengthPasswordException, UserLoginAlreadyExistException {
         if (isUserByLoginExist(user.getLogin())){
             throw new UserLoginAlreadyExistException("User with this login is already exist");

@@ -53,10 +53,10 @@ public class UserDAOImpl implements UserDAO {
         saveUsers(usersList);
     }
 
-    public void removeUserById(long id) throws IOException {
+    public void removeUserById(Long id) throws IOException {
         List<User> usersList = getAllUsers();
 
-        for (User iUser:usersList) {
+        for (User iUser : usersList) {
             if (iUser.getId() == id)
                 usersList.remove(id);
             break;
@@ -90,7 +90,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-    public User getUserById(long id) throws IOException {
+    public User getUserById(Long id) throws IOException {
         List<User> usersList = getAllUsers();
 
         for (User iUser : usersList) {

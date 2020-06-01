@@ -14,7 +14,7 @@ public class UserParser {
     public static User lineToObjectUser(String lineFromUsersList){
         String[] userInfo = lineFromUsersList.split(User.separator);
 
-        long id = Long.parseLong(userInfo[0]);
+        Long id = Long.parseLong(userInfo[0]);
         String login = userInfo[1];
         String password = userInfo[2];
 

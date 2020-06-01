@@ -10,7 +10,6 @@ import exception.UserShortLengthPasswordException;
 import validator.UserValidator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -39,14 +38,61 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAllUsers();
     }
 
-    public void addUser(User user) throws UserLoginAlreadyExistException, UserShortLengthPasswordException, UserShortLengthLoginException, IOException {
+    private boolean isLoginAlreadyExist(String login) throws IOException {
+        User user = getUserByLogin(login);
+
+        return user != null;
+    }
+
+    public boolean addUser(User user) throws UserLoginAlreadyExistException, UserShortLengthPasswordException, UserShortLengthLoginException, IOException {
+        if(isLoginAlreadyExist(user.getLogin()))
+        {
+            throw new UserLoginAlreadyExistException();
+        }
         if(userValidator.isValid(user)){
             userDAO.saveUser(user);
+            return true;
         }
 
+        return false;
     }
 
     public void removeUserById(Long userId) throws IOException {
         userDAO.removeUserById(userId);
+    }
+
+    public User getUserById(Long id) throws IOException {
+       List<User> users = getAllUsers();
+        for (User user: users) {
+            boolean isFoundUser = user.getId().equals(id);
+            if (isFoundUser){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getUserByLogin(String login) throws IOException {
+        List<User> users = getAllUsers();
+        for (User user: users) {
+            boolean isFoundUser = user.getLogin().equals(login);
+            if (isFoundUser){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public boolean isCorrectLoginAndPassword(String login, String password) throws IOException {
+        User user = getUserByLogin(login);
+
+        if (user == null ){
+            return false;
+        }
+
+        boolean isCorrectLogin = user.getLogin().equals(login);
+        boolean isCorrectPassword = user.getPassword().equals(password);
+
+        return  isCorrectLogin && isCorrectPassword;
     }
 }

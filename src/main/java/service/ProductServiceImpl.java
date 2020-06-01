@@ -13,7 +13,7 @@ public class ProductServiceImpl implements ProductService {
 
     List<Product> products;
     private static ProductServiceImpl instance = null;
-    private ProductDAO productDAO = new ProductDAOImpl("data", "Product");
+    private ProductDAO productDAO = new ProductDAOImpl();
 
     public static ProductServiceImpl getInstance() throws IOException {
         if (instance == null){
@@ -37,7 +37,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product getProductByName(String productName) throws IOException {
-        return productDAO.getProductByName(productName);
+        List<Product> products = getAllProducts();
+        for (Product product : products) {
+            boolean isFoundProduct = product.getProductName().equals(productName);
+            if (isFoundProduct){
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public Product getProductById(Long id) throws IOException {
+        List<Product> products = getAllProducts();
+        for (Product product: products) {
+            boolean isFoundProduct = product.getId().equals(id);
+            if(isFoundProduct){
+                return product;
+            }
+        }
+        return null;
     }
 
     public boolean isProductAvailable(String productName) {
@@ -56,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     public boolean isProductExist(String productName) {
         Product product = null;
         try{
-            product = productDAO.getProductByName(productName);
+            product = getProductByName(productName);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -65,16 +83,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public boolean isProductExist(long id) {
+    public boolean isProductExist(Long id) {
         Product product = null;
         try{
-            product = productDAO.getProductById(id);
+            product = getProductById(id);
         }catch(IOException e){
             e.printStackTrace();
         }
 
         return product != null;
     }
+
+    public boolean saveProduct(Product product) {
+        return false;
+    }
+
+
 
 
 }
