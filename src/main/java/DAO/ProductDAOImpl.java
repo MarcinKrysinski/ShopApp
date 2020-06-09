@@ -1,7 +1,7 @@
 package DAO;
 
 import api.ProductDAO;
-import entity.Parse.ProductParser;
+import entity.parse.ProductParser;
 import entity.Product;
 import utilities.FileUtilites;
 
@@ -11,18 +11,18 @@ import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
 
-    private static final String fileName = "data";
+    private static final String fileName = "product.data";
     private static ProductDAOImpl instance = null;
 
-    public ProductDAOImpl() throws IOException {
+    public ProductDAOImpl()  {
         try {
             FileUtilites.createNewFiles(fileName);
-        }catch (FileNotFoundException e){
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public static ProductDAOImpl getInstance() throws IOException {
+    public static ProductDAOImpl getInstance()  {
         if(instance == null){
             instance = new ProductDAOImpl();
         }
@@ -77,7 +77,6 @@ public class ProductDAOImpl implements ProductDAO {
         String readOneLineFromFile = reader.readLine();
         while(readOneLineFromFile != null) {
             Product product = ProductParser.convertStringToProduct(readOneLineFromFile);
-//            System.out.println(readOneLineFromFile);
             readOneLineFromFile = reader.readLine();
             if (product !=null ){
                 productList.add(product);

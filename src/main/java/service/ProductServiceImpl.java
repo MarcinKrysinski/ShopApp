@@ -4,29 +4,26 @@ import DAO.ProductDAOImpl;
 import api.ProductDAO;
 import api.ProductService;
 import entity.Product;
+import validator.ProductValidator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
-    List<Product> products;
     private static ProductServiceImpl instance = null;
     private ProductDAO productDAO = new ProductDAOImpl();
+    private ProductValidator productValidator = ProductValidator.getInstance();
 
-    public static ProductServiceImpl getInstance() throws IOException {
-        if (instance == null){
+    public static ProductServiceImpl getInstance() {
+        if (instance == null) {
             instance = new ProductServiceImpl();
         }
         return instance;
     }
 
-    public ProductServiceImpl() throws IOException {
+    public ProductServiceImpl() {
     }
-//    public ProductServiceImpl(List<Product> productList) {
-//        this.products = new ArrayList<Product>(productList);
-//    }
 
     public List<Product> getAllProducts() throws IOException {
         return productDAO.getAllProducts();
@@ -40,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = getAllProducts();
         for (Product product : products) {
             boolean isFoundProduct = product.getProductName().equals(productName);
-            if (isFoundProduct){
+            if (isFoundProduct) {
                 return product;
             }
         }
@@ -49,9 +46,9 @@ public class ProductServiceImpl implements ProductService {
 
     public Product getProductById(Long id) throws IOException {
         List<Product> products = getAllProducts();
-        for (Product product: products) {
+        for (Product product : products) {
             boolean isFoundProduct = product.getId().equals(id);
-            if(isFoundProduct){
+            if (isFoundProduct) {
                 return product;
             }
         }
@@ -73,9 +70,9 @@ public class ProductServiceImpl implements ProductService {
 
     public boolean isProductExist(String productName) {
         Product product = null;
-        try{
+        try {
             product = getProductByName(productName);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -85,9 +82,9 @@ public class ProductServiceImpl implements ProductService {
 
     public boolean isProductExist(Long id) {
         Product product = null;
-        try{
+        try {
             product = getProductById(id);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -95,10 +92,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public boolean saveProduct(Product product) {
+        try {
+            if (productValidator.isValid(product)) {
+                productDAO.saveProduct(product);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return false;
+
     }
-
-
 
 
 }

@@ -12,7 +12,6 @@ public interface UserService {
     boolean addUser(User user) throws UserLoginAlreadyExistException, UserShortLengthPasswordException, UserShortLengthLoginException, IOException;
 
     List<User> getAllUsers() throws IOException;
-//    void addUser(User user) throws UserLoginAlreadyExistException, UserShortLengthPasswordException, UserShortLengthLoginException, IOException;
     void removeUserById(Long userId) throws IOException;
 
     User getUserById(Long id) throws IOException;

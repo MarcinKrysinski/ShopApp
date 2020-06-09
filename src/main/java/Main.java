@@ -1,43 +1,202 @@
-import DAO.ProductDAOImpl;
-import api.ProductDAO;
+
+import api.ProductService;
+import api.UserRegisterLoginFacade;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
+import entity.User;
+import exception.UserLoginAlreadyExistException;
+import exception.UserShortLengthLoginException;
+import exception.UserShortLengthPasswordException;
+import facade.UserRegisterLoginFacadeImpl;
 import service.ProductServiceImpl;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+    static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
-        Cloth cloth = new Cloth(1L, "T-shirt", 35.99, 0.3, "White", 10,"L", "COTTON");
+    public static void startMenu() {
+        System.out.println("MANAGEMENT MENU");
+        System.out.println("1 - Zaloguj się");
+        System.out.println("2 - Zarejestruj się");
+        System.out.println("0 - Wyjdź");
+    }
 
-        List<Product> bootsList = new ArrayList<Product>();
-        bootsList.add(new Boots(1L, "Boots", 99.99, 0.5, "Black", 15, 43, true));
-        bootsList.add(new Boots(2L, "Boots2", 59.99, 0.5, "Green", 25, 41, false));
-        bootsList.add(new Boots(3L, "Boots3", 69.99, 0.5, "White", 5, 39, true));
+    public static void loggedMenu() {
+        System.out.println("MANAGEMENT MENU");
+        System.out.println("1 - Dodaj nowy product");
+        System.out.println("0 - Wyloguj się");
+    }
+
+    public static void productTypeMenu() {
+        System.out.println("1 - Dodaj buty");
+        System.out.println("2 - Dodaj ubrania");
+        System.out.println("3 - Inne");
+    }
+
+    public static Product createOtherProduct() {
+        String productName, color;
+        Double price, weight;
+        Long count;
+        System.out.println("ProductName: ");
+        productName = scanner.next();
+
+        System.out.println("Price: ");
+        price = scanner.nextDouble();
+
+        System.out.println("Weight: ");
+        weight = scanner.nextDouble();
+
+        System.out.println("Color: ");
+        color = scanner.next();
+
+        System.out.println("Count: ");
+        count = scanner.nextLong();
+
+        return new Product(1L, productName, price, weight, color, count);
+    }
+
+    public static Product createBootsProduct() {
+        String productName, color;
+        Double price, weight;
+        Long count;
+        Integer size;
+        Boolean isNaturalSkin;
+
+        System.out.println("ProductName: ");
+        productName = scanner.next();
+
+        System.out.println("Price: ");
+        price = scanner.nextDouble();
+
+        System.out.println("Weight: ");
+        weight = scanner.nextDouble();
+
+        System.out.println("Color: ");
+        color = scanner.next();
+
+        System.out.println("Count: ");
+        count = scanner.nextLong();
+
+        System.out.println("Size: ");
+        size = scanner.nextInt();
+
+        System.out.println("Is natural skin: ");
+        isNaturalSkin = scanner.nextBoolean();
 
 
-        ProductDAO productClothDao = new ProductDAOImpl("clothes", "CLOTH");
-        productClothDao.saveProduct(cloth);
+        return new Boots(1L, productName, price, weight, color, count, size, isNaturalSkin);
+    }
 
-        ProductDAO productBootsDao = new ProductDAOImpl("boots", "BOOTS");
-        productBootsDao.saveProducts(bootsList);
-//        productBootsDao.removeProductByName("Boots2");
-//        productBootsDao.getAllProducts();
-//        productBootsDao.saveProducts(productBootsDao.getAllProducts());
-        List<Product> test2 = productBootsDao.getAllProducts();
-        Product test = productBootsDao.getProductByName("BOoTS3");
-        System.out.println(test);
-        for (Product product:test2) {
-            System.out.println(product);
+    public static Product createClothProduct() {
+        String productName, color, size, material;
+        Double price, weight;
+        Long count;
+
+        System.out.println("ProductName: ");
+        productName = scanner.next();
+
+        System.out.println("Price: ");
+        price = scanner.nextDouble();
+
+        System.out.println("Weight: ");
+        weight = scanner.nextDouble();
+
+        System.out.println("Color: ");
+        color = scanner.next();
+
+        System.out.println("Count: ");
+        count = scanner.nextLong();
+
+        System.out.println("Size: ");
+        size = scanner.next();
+
+        System.out.println("Material: ");
+        material = scanner.next();
+
+
+        return new Cloth(1L, productName, price, weight, color, count, size, material);
+    }
+
+    public static void main(String[] args) throws IOException, UserShortLengthPasswordException, UserLoginAlreadyExistException, UserShortLengthLoginException {
+
+        UserRegisterLoginFacade userFacade = UserRegisterLoginFacadeImpl.getInstance();
+        ProductService productService = ProductServiceImpl.getInstance();
+
+        boolean appOn = true;
+        boolean loggedOn = false;
+        int read;
+
+        while (appOn) {
+            startMenu();
+            read = scanner.nextInt();
+
+            switch (read) {
+                case 1:
+                    System.out.println("Podaj login:");
+                    String loginLog = scanner.next();
+                    System.out.println("Podaj hasło:");
+                    String passwordLog = scanner.next();
+                    if (userFacade.loginUser(loginLog, passwordLog)) {
+                        loggedOn = true;
+                        System.out.println("Zalogowałeś się!");
+                    } else {
+                        System.out.println("Niepoprawne dane!");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Podaj login:");
+                    String loginReg = scanner.next();
+                    System.out.println("Podaj hasło:");
+                    String passwordReg = scanner.next();
+                    User user = new User(1L, loginReg, passwordReg);
+                    if (userFacade.registerUser(user)) {
+                        System.out.println("Zarejestrowałeś się!");
+                    } else {
+                        System.out.println("Cos poszło nie tak!");
+                    }
+                    break;
+                case 0:
+                    appOn = false;
+                    break;
+            }
+
+            while (loggedOn) {
+
+                loggedMenu();
+                read = scanner.nextInt();
+
+                switch (read) {
+                    case 1:
+                        productTypeMenu();
+                        read = scanner.nextInt();
+                        Product product = null;
+                        switch (read) {
+                            case 1:
+                                product = createBootsProduct();
+                                break;
+                            case 2:
+                                product = createClothProduct();
+                                break;
+                            case 3:
+                                product = createOtherProduct();
+                                break;
+                        }
+                        if (productService.saveProduct(product)) {
+                            System.out.println("Produkt został utworzony");
+                        } else {
+                            System.out.println("Produkt nie został utworzony.");
+                        }
+                        break;
+
+
+                    case 0:
+                        loggedOn = false;
+                        break;
+                }
+            }
         }
-
-//        ProductServiceImpl productService = new ProductServiceImpl();
-//        productService.getAllProducts();
-
-
     }
 }

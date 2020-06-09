@@ -1,7 +1,7 @@
 package DAO;
 
 import api.UserDAO;
-import entity.Parse.UserParser;
+import entity.parse.UserParser;
 import entity.User;
 import utilities.FileUtilites;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-    private final String fileName = "data";
+    private final String fileName = "users.data";
     private static UserDAOImpl instance = null;
 
     public static UserDAOImpl getInstance(){
@@ -22,12 +22,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public UserDAOImpl() {
-
+        try {
+            FileUtilites.createNewFiles(fileName);
+        } catch (IOException e) {
+            System.out.println("Error with file path");
+            // exit zamyka całą aplikację
+            System.exit(-1);
+        }
     }
 
 
     public void saveUser(User user) throws IOException {
-        List<User> usersList = new ArrayList<User>();
+        List<User> usersList = getAllUsers();
         usersList.add(user);
         saveUsers(usersList);
     }
@@ -57,7 +63,7 @@ public class UserDAOImpl implements UserDAO {
         List<User> usersList = getAllUsers();
 
         for (User iUser : usersList) {
-            if (iUser.getId() == id)
+            if (iUser.getId().equals(id))
                 usersList.remove(id);
             break;
         }
@@ -72,9 +78,8 @@ public class UserDAOImpl implements UserDAO {
         String readOneLineFromFile = reader.readLine();
         while(readOneLineFromFile != null) {
             User user = UserParser.convertStringToUser(readOneLineFromFile);
-//            System.out.println(readOneLineFromFile);
-            readOneLineFromFile = reader.readLine();
             usersList.add(user);
+            readOneLineFromFile = reader.readLine();
         }
         reader.close();
         return usersList;

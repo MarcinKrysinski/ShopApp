@@ -3,7 +3,7 @@ package entity;
 public class Product {
 
     public final static char productType = 'P';
-    public final static String separator = "  ";
+    public final static String separator = "#";
 
     private Long id;
     private String productName;
