@@ -1,8 +1,10 @@
 package entity;
 
+import entity.enums.ProductSeparators;
+
 public class Cloth extends Product {
 
-    public final static char productType = 'C';
+    public final static String productType = ProductSeparators.CLOTH_ID.toString();
 
     private String size;
     private String material;

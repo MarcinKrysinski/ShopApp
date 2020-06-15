@@ -1,8 +1,10 @@
 package entity;
 
+import entity.enums.ProductSeparators;
+
 public class Boots extends Product {
 
-    public final static char productType = 'B';
+    public final static String productType = ProductSeparators.BOOTS_ID.toString();
 
     private int size;
     private boolean isNatural;

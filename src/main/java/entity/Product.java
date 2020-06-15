@@ -1,9 +1,11 @@
 package entity;
 
+import entity.enums.ProductSeparators;
+
 public class Product {
 
-    public final static char productType = 'P';
-    public final static String separator = "#";
+    public final static String productType = ProductSeparators.PRODUCT_ID.toString();
+    public final static String separator = ProductSeparators.PRODUCT_SEPARATOR.toString();
 
     private Long id;
     private String productName;
