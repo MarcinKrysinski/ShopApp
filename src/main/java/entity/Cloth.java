@@ -1,5 +1,7 @@
 package entity;
 
+import entity.enums.Colors;
+import entity.enums.Materials;
 import entity.enums.ProductSeparators;
 
 public class Cloth extends Product {
@@ -7,9 +9,9 @@ public class Cloth extends Product {
     public final static String productType = ProductSeparators.CLOTH_ID.toString();
 
     private String size;
-    private String material;
+    private Materials material;
 
-    public Cloth(Long id, String productName, Double price, Double weight, String color, Long productCount, String size, String material) {
+    public Cloth(Long id, String productName, Double price, Double weight, Colors color, Long productCount, String size, Materials material) {
         super(id, productName, price, weight, color, productCount);
         this.size = size;
         this.material = material;
@@ -19,7 +21,7 @@ public class Cloth extends Product {
         return size;
     }
 
-    public String getMaterial() {
+    public Materials getMaterial() {
         return material;
     }
 

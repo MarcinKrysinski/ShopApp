@@ -18,5 +18,12 @@ public enum ProductSeparators {
         return character;
     }
 
-
+    public static ProductSeparators getProductTypeByChar(String character){
+        for (ProductSeparators productType : ProductSeparators.values()) {
+            if (productType.getCharacter().equals(character)){
+                return productType;
+            }
+        }
+        return null;
+    }
 }
