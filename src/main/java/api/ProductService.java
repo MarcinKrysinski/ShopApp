@@ -1,6 +1,10 @@
 package api;
 
 import entity.Product;
+import exception.ProductCountNegativeException;
+import exception.ProductNameEmptyException;
+import exception.ProductPriceNoPositiveException;
+import exception.ProductWeightNoPositiveException;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +20,7 @@ public interface ProductService {
     boolean isProductExist(String productName) throws IOException;
     boolean isProductExist(Long id) throws IOException;
 
-    boolean saveProduct(Product product);
+    boolean saveProduct(Product product) throws ProductPriceNoPositiveException, ProductNameEmptyException, ProductCountNegativeException, ProductWeightNoPositiveException, IOException;
 
 
 }
