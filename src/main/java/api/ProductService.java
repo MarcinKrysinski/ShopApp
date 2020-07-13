@@ -21,6 +21,6 @@ public interface ProductService {
     boolean isProductExist(Long id) throws IOException;
 
     boolean saveProduct(Product product) throws ProductPriceNoPositiveException, ProductNameEmptyException, ProductCountNegativeException, ProductWeightNoPositiveException, IOException;
-
+    void removeProduct(String productName) throws Exception;
 
 }

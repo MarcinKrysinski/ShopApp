@@ -94,5 +94,9 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    public void removeProduct(String productName) throws Exception {
+        productDAO.removeProductByName(productName);
+    }
+
 
 }
