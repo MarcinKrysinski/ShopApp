@@ -4,13 +4,6 @@ import entity.User;
 
 public class UserParser {
 
-    public static User convertStringToUser(String readOneLineFromFile){
-        if (readOneLineFromFile != null){
-            return lineToObjectUser(readOneLineFromFile);
-        }
-        return null;
-    }
-
     public static User lineToObjectUser(String lineFromUsersList){
         String[] userInfo = lineFromUsersList.split(User.separatorUser);
 

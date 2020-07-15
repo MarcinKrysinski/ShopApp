@@ -4,10 +4,10 @@ import api.ProductDAO;
 import entity.parse.ProductParser;
 import entity.Product;
 import utilities.FileUtilites;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ProductDAOImpl implements ProductDAO {
 
@@ -77,10 +77,10 @@ public class ProductDAOImpl implements ProductDAO {
         String readOneLineFromFile = reader.readLine();
         while(readOneLineFromFile != null) {
             Product product = ProductParser.convertStringToProduct(readOneLineFromFile);
-            readOneLineFromFile = reader.readLine();
             if (product !=null ){
                 productList.add(product);
             }
+            readOneLineFromFile = reader.readLine();
         }
         reader.close();
         return productList;

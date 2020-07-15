@@ -4,11 +4,10 @@ import entity.enums.Colors;
 import entity.enums.ProductSeparators;
 import entity.enums.SkinType;
 
-import java.awt.*;
 
 public class Boots extends Product {
 
-    public final static String productType = ProductSeparators.BOOTS_ID.toString();
+    public String productType = ProductSeparators.BOOTS_ID.toString();
 
     private int size;
     private SkinType isNatural;
@@ -29,6 +28,8 @@ public class Boots extends Product {
 
     @Override
     public String toString() {
-        return productType + separator + super.toString() + separator + size + separator + isNatural;
+        return productType + separator + getBasicProductString() + separator + size + separator + isNatural;
     }
+
+
 }

@@ -5,8 +5,8 @@ import entity.enums.ProductSeparators;
 
 public class Product {
 
-    public final static String productType = ProductSeparators.PRODUCT_ID.toString();
-    public final static String separator = ProductSeparators.PRODUCT_SEPARATOR.toString();
+    public String productType = ProductSeparators.PRODUCT_ID.toString();
+    public String separator = ProductSeparators.PRODUCT_SEPARATOR.toString();
 
     private Long id;
     private String productName;
@@ -56,8 +56,13 @@ public class Product {
         return color;
     }
 
+
+    protected String getBasicProductString() {
+        return id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
+    }
+
     @Override
     public String toString() {
-        return productType + separator + id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
+        return productType + separator + getBasicProductString();
     }
 }

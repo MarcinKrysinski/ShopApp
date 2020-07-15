@@ -1,14 +1,11 @@
 package DAO;
 
 import api.UserDAO;
-import entity.parse.UserParser;
 import entity.User;
-import utilities.FileUtilites;
-
-import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class UserDAOImpl implements UserDAO {
 

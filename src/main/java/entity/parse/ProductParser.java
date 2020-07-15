@@ -11,9 +11,9 @@ import entity.enums.SkinType;
 public class ProductParser {
 
     public static Product convertStringToProduct(String productStr){
-        final ProductSeparators productType = ProductSeparators.getProductTypeByChar(productStr);
+        final ProductSeparators productType = ProductSeparators.getProductTypeByChar(productStr.substring(0,1));
 
-        assert productType != null;
+//        assert productType != null;
         switch(productType){
             case PRODUCT_ID:
                 return lineToObjectProduct(productStr);

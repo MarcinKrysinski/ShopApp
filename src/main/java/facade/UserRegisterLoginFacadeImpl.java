@@ -8,8 +8,6 @@ import exception.UserShortLengthLoginException;
 import exception.UserShortLengthPasswordException;
 import service.UserServiceImpl;
 
-import java.io.IOException;
-
 
 public class UserRegisterLoginFacadeImpl implements UserRegisterLoginFacade {
 
