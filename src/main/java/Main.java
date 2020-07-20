@@ -1,4 +1,6 @@
 
+import DAO.ProductDAOImpl;
+import api.ProductDAO;
 import api.ProductFacade;
 import api.UserRegisterLoginFacade;
 import entity.Boots;
@@ -14,6 +16,7 @@ import entity.parse.SkinParser;
 import facade.ProductFacadeImpl;
 import facade.UserRegisterLoginFacadeImpl;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -131,83 +134,87 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        UserRegisterLoginFacade userFacade = UserRegisterLoginFacadeImpl.getInstance();
-        ProductFacade productFacade = ProductFacadeImpl.getInstance();
+//        UserRegisterLoginFacade userFacade = UserRegisterLoginFacadeImpl.getInstance();
+//        ProductFacade productFacade = ProductFacadeImpl.getInstance();
+//
+//        boolean appOn = true;
+//        boolean loggedOn = false;
+//        int read;
+//
+//        while (appOn) {
+//            startMenu();
+//            read = scanner.nextInt();
+//
+//            switch (read) {
+//                case 1:
+//                    System.out.println("Podaj login:");
+//                    String loginLog = scanner.next();
+//                    System.out.println("Podaj hasło:");
+//                    String passwordLog = scanner.next();
+//                    if (userFacade.loginUser(loginLog, passwordLog)) {
+//                        loggedOn = true;
+//                        System.out.println("Zalogowałeś się!");
+//                    } else {
+//                        System.out.println("Niepoprawne dane!");
+//                    }
+//                    break;
+//                case 2:
+//                    System.out.println("Podaj login:");
+//                    String loginReg = scanner.next();
+//                    System.out.println("Podaj hasło:");
+//                    String passwordReg = scanner.next();
+//                    User user = new User(1L, loginReg, passwordReg);
+//                    userFacade.registerUser(user);
+//                    break;
+//                case 0:
+//                    appOn = false;
+//                    break;
+//            }
+//
+//            while (loggedOn) {
+//
+//                loggedMenu();
+//                read = scanner.nextInt();
+//
+//                switch (read) {
+//                    case 1:
+//                        productTypeMenu();
+//                        read = scanner.nextInt();
+//                        Product product = null;
+//                        switch (read) {
+//                            case 1:
+//                                product = createBootsProduct();
+//                                break;
+//                            case 2:
+//                                product = createClothProduct();
+//                                break;
+//                            case 3:
+//                                product = createOtherProduct();
+//                                break;
+//                        }
+//                        productFacade.createProduct(product);
+//                        break;
+//                    case 2:
+//                        System.out.println("Dostepne produkty: ");
+//                        System.out.println(productFacade.getAllProducts());
+//
+//                        System.out.println("Podaj nazwę produktu który chcesz usunać: ");
+//                        String productName = scanner.next();
+//                        productFacade.removeProduct(productName);
+//                        break;
+//                    case 3:
+//                        System.out.println(productFacade.getAllProducts());
+//                        break;
+//                    case 0:
+//                        loggedOn = false;
+//                        break;
+//                }
+//            }
+//        }
 
-        boolean appOn = true;
-        boolean loggedOn = false;
-        int read;
-
-        while (appOn) {
-            startMenu();
-            read = scanner.nextInt();
-
-            switch (read) {
-                case 1:
-                    System.out.println("Podaj login:");
-                    String loginLog = scanner.next();
-                    System.out.println("Podaj hasło:");
-                    String passwordLog = scanner.next();
-                    if (userFacade.loginUser(loginLog, passwordLog)) {
-                        loggedOn = true;
-                        System.out.println("Zalogowałeś się!");
-                    } else {
-                        System.out.println("Niepoprawne dane!");
-                    }
-                    break;
-                case 2:
-                    System.out.println("Podaj login:");
-                    String loginReg = scanner.next();
-                    System.out.println("Podaj hasło:");
-                    String passwordReg = scanner.next();
-                    User user = new User(1L, loginReg, passwordReg);
-                    userFacade.registerUser(user);
-                    break;
-                case 0:
-                    appOn = false;
-                    break;
-            }
-
-            while (loggedOn) {
-
-                loggedMenu();
-                read = scanner.nextInt();
-
-                switch (read) {
-                    case 1:
-                        productTypeMenu();
-                        read = scanner.nextInt();
-                        Product product = null;
-                        switch (read) {
-                            case 1:
-                                product = createBootsProduct();
-                                break;
-                            case 2:
-                                product = createClothProduct();
-                                break;
-                            case 3:
-                                product = createOtherProduct();
-                                break;
-                        }
-                        productFacade.createProduct(product);
-                        break;
-                    case 2:
-                        System.out.println("Dostepne produkty: ");
-                        System.out.println(productFacade.getAllProducts());
-
-                        System.out.println("Podaj nazwę produktu który chcesz usunać: ");
-                        String productName = scanner.next();
-                        productFacade.removeProduct(productName);
-                        break;
-                    case 3:
-                        System.out.println(productFacade.getAllProducts());
-                        break;
-                    case 0:
-                        loggedOn = false;
-                        break;
-                }
-            }
-        }
+        ProductDAOImpl productDAO = ProductDAOImpl.getInstance();
+        List<Product> productList = productDAO.getAllProducts();
+        System.out.println(productList);
     }
 
 
