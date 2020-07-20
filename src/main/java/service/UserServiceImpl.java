@@ -52,32 +52,19 @@ public class UserServiceImpl implements UserService {
 
     public User getUserById(Long id) {
        List<User> users = getAllUsers();
-        for (User user: users) {
-            boolean isFoundUser = user.getId().equals(id);
-            if (isFoundUser){
-                return user;
-            }
-        }
-        return null;
+       return users.stream().filter(user -> user.getId().equals(id)).findAny().orElse(null);
+
     }
 
     public User getUserByLogin(String login) {
         List<User> users = null;
             users = getAllUsers();
-            for (User user : users
-            ) {
-                boolean isFoundUser = user.getLogin().equals(login);
-                if (isFoundUser) {
-                    return user;
-                }
-
-            }
-        return null;
+            return users.stream().filter(user -> user.getLogin().equals(login))
+                    .findFirst().orElse(null);
     }
 
     public boolean isCorrectLoginAndPassword(String login, String password){
         User user = getUserByLogin(login);
-
         if (user == null ){
             return false;
         }

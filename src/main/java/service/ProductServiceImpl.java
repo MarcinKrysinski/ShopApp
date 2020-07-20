@@ -39,33 +39,31 @@ public class ProductServiceImpl implements ProductService {
 
     public Product getProductByName(String productName) throws IOException {
         List<Product> products = getAllProducts();
-        for (Product product : products) {
-            boolean isFoundProduct = product.getProductName().equals(productName);
-            if (isFoundProduct) {
-                return product;
+        Product searchedProductByName = products.stream().filter(product -> {
+            try {
+                return isProductAvailable(productName);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
-        return null;
+            return false;
+        }).filter(product -> product.getProductName().equals(productName)).findFirst().orElse(null);
+        return searchedProductByName;
+
     }
 
     public Product getProductById(Long id) throws IOException {
         List<Product> products = getAllProducts();
-        for (Product product : products) {
-            boolean isFoundProduct = product.getId().equals(id);
-            if (isFoundProduct) {
-                return product;
-            }
-        }
-        return null;
+        return products.stream().filter(product -> product.getId().equals(id))
+                .findFirst().orElse(null);
+
     }
 
     public boolean isProductAvailable(String productName) throws IOException {
-        for (Product product : getAllProducts()) {
-            if (isProductExist(productName) && product.getProductCount() > 0) {
-                return true;
-            }
-        }
-        return false;
+        List<Product> productList = getAllProducts();
+        boolean isExist = isProductExist(productName);
+        return productList.stream()
+                .filter(product -> product.getProductName().equals(productName))
+                .anyMatch(product -> (isExist && product.getProductCount()>0));
     }
 
     public boolean isProductExist(String productName) throws IOException {
@@ -84,7 +82,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public boolean saveProduct(Product product) throws ProductPriceNoPositiveException, ProductNameEmptyException, ProductCountNegativeException, ProductWeightNoPositiveException, IOException {
-
         if (productValidator.isValid(product)) {
             productDAO.saveProduct(product);
             return true;
