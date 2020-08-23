@@ -1,17 +1,21 @@
 package entity;
 
+import entity.enums.Colors;
+import entity.enums.ProductSeparators;
+
 public class Product {
 
-    public final static String separator = "  ";
+    public String productType = ProductSeparators.PRODUCT_ID.toString();
+    public String separator = ProductSeparators.PRODUCT_SEPARATOR.toString();
 
-    private long id;
+    private Long id;
     private String productName;
-    private double price;
-    private double weight;
-    private String color;
-    private long productCount;
+    private Double price;
+    private Double weight;
+    private Colors color;
+    private Long productCount;
 
-    public Product(long id, String productName, double price, double weight, String color, long productCount) {
+    public Product(Long id, String productName, Double price, Double weight, Colors color, Long productCount) {
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -20,23 +24,23 @@ public class Product {
         this.productCount = productCount;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public long getProductCount() {
+    public Long getProductCount() {
         return productCount;
     }
 
-    public void setProductCount(long productCount) {
+    public void setProductCount(Long productCount) {
         this.productCount = productCount;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -44,16 +48,21 @@ public class Product {
         return productName;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public String getColor() {
+    public Colors getColor() {
         return color;
+    }
+
+
+    protected String getBasicProductString() {
+        return id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
     }
 
     @Override
     public String toString() {
-        return id + separator + productName + separator + price + separator + weight + separator + color + separator + productCount;
+        return productType + separator + getBasicProductString();
     }
 }

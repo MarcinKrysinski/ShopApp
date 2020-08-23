@@ -1,6 +1,11 @@
+import api.ProductFacade;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
+import entity.enums.Colors;
+import entity.enums.Materials;
+import entity.enums.SkinType;
+import facade.ProductFacadeImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import service.ProductServiceImpl;
@@ -10,21 +15,25 @@ import java.util.List;
 
 public class ProductServiceTest {
 
-//    @Test
-//    public void getAllProductsTest(){
-//
-//        //is
-//        List<Product> productList = new ArrayList<Product>();
-//        productList.add(new Boots(1L, "Buty", 87.89, 1, "black", 10, 43, true));
-//        productList.add(new Cloth(2L, "T-shirt", 59, 0.3, "white" ,20, "XL", "COTTON"));
-//
-//        //then
-//        ProductServiceImpl productService = new ProductServiceImpl(productList);
-//        List<Product> productFromTestClass = productService.getAllProducts();
-//
-//        //when
-//        Assertions.assertEquals(productList, productFromTestClass);
-//    }
+    @Test
+    public void getAllProductsTest(){
+
+        //is
+        List<Product> productList = new ArrayList<Product>();
+
+        productList.add(new Boots(1L, "Buty", 87.89, 1D, Colors.BLACK, 10L, 43, SkinType.NATURAL));
+        productList.add(new Cloth(2L, "T-shirt", 59D, 0.3, Colors.WHITE ,20L, "XL", Materials.COTTON));
+
+        //then
+        ProductFacade productFacade = new ProductFacadeImpl();
+//        productFacade.
+        productFacade.createProduct(productList.get(0));
+        productFacade.createProduct(productList.get(1));
+        List<Product> productFromTestClass = productFacade.getAllProducts();
+
+        //when
+        Assertions.assertEquals(productList, productFromTestClass);
+    }
 //
 //    @Test
 //    public void getAllCountProductsOnTheListTest(){

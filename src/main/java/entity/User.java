@@ -2,19 +2,19 @@ package entity;
 
 public class User {
 
-    public final static String separator = "  ";
+    public final static String separatorUser = "#";
 
-    private long id;
+    private Long id;
     private String login;
     private String password;
 
-    public User(long id, String login, String password) {
+    public User(Long id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -28,6 +28,6 @@ public class User {
 
     @Override
     public String toString() {
-        return id + login + password;
+        return id + separatorUser + login + separatorUser + password;
     }
 }

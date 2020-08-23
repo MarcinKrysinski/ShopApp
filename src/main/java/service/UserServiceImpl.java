@@ -1,15 +1,22 @@
 package service;
 
+import DAO.UserDAOImpl;
+import api.UserDAO;
 import api.UserService;
 import entity.User;
-
-import java.util.ArrayList;
+import exception.UserLoginAlreadyExistException;
+import exception.UserShortLengthLoginException;
+import exception.UserShortLengthPasswordException;
+import validator.UserValidator;
 import java.util.List;
+
 
 public class UserServiceImpl implements UserService {
 
-    List<User> users;
+
     private static UserServiceImpl instance =null;
+    private UserDAO userDAO = UserDAOImpl.getInstance();
+    private UserValidator userValidator = UserValidator.getInstance();
 
     public static UserServiceImpl getInstance(){
         if(instance == null){
@@ -19,28 +26,61 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserServiceImpl() {
-//        this.users = new ArrayList<User>();
-    }
-
-    public UserServiceImpl(List<User> usersList) {
-        this.users = new ArrayList<User>(usersList);
     }
 
     public List<User> getAllUsers() {
-        return users;
+        return userDAO.getAllUsers();
     }
 
-    public void addUser(User user) {
-        users.add(user);
+    public boolean addUser(User user) throws UserLoginAlreadyExistException, UserShortLengthLoginException, UserShortLengthPasswordException {
+
+            if (isUserByLoginExist(user.getLogin())) {
+                throw new UserLoginAlreadyExistException();
+            }
+
+            if (userValidator.isValid(user)) {
+                userDAO.saveUser(user);
+                return true;
+            }
+
+        return false;
     }
 
     public void removeUserById(Long userId) {
-        for(int i=0; i < users.size(); i++) {
-            User userFromList = users.get(i);
-            if (userFromList.getId() == userId){
-                users.remove(i);
-                break;
-            }
-        }
+        userDAO.removeUserById(userId);
     }
+
+    public User getUserById(Long id) {
+       List<User> users = getAllUsers();
+       return users.stream().filter(user -> user.getId().equals(id)).findAny().orElse(null);
+
+    }
+
+    public User getUserByLogin(String login) {
+        List<User> users = null;
+            users = getAllUsers();
+            return users.stream().filter(user -> user.getLogin().equals(login))
+                    .findFirst().orElse(null);
+    }
+
+    public boolean isCorrectLoginAndPassword(String login, String password){
+        User user = getUserByLogin(login);
+        if (user == null ){
+            return false;
+        }
+
+        boolean isCorrectLogin = user.getLogin().equals(login);
+        boolean isCorrectPassword = user.getPassword().equals(password);
+
+        return  isCorrectLogin && isCorrectPassword;
+    }
+
+    private boolean isUserByLoginExist(String login) {
+        User user = getUserByLogin(login);
+        if (user != null){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -1,31 +1,40 @@
 package DAO;
 
 import api.ProductDAO;
-import entity.Parse.ProductParser;
+import entity.parse.ProductParser;
 import entity.Product;
 import utilities.FileUtilites;
-
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 public class ProductDAOImpl implements ProductDAO {
 
-    private final String fileName = "boots";
-    private final String productType;
+    private static final String fileName = "product.data";
+    private static ProductDAOImpl instance = null;
 
-    public ProductDAOImpl(String fileName, String productType) throws IOException {
-//        this.fileName = fileName;
-        this.productType = productType;
+    public ProductDAOImpl()  {
         try {
             FileUtilites.createNewFiles(fileName);
-        }catch (FileNotFoundException e){
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
 
+    public static ProductDAOImpl getInstance()  {
+        if(instance == null){
+            instance = new ProductDAOImpl();
+        }
+        return instance;
+    }
+
+
     public void saveProduct(Product product) throws IOException {
-        List<Product> productsList = new ArrayList<Product>();
+        List<Product> productsList = getAllProducts();
         productsList.add(product);
         saveProducts(productsList);
     }
@@ -39,72 +48,48 @@ public class ProductDAOImpl implements ProductDAO {
         printWriter.close();
     }
 
-    public void removeProductById(long id) throws IOException {
+    public void removeProductById(Long id) throws IOException {
         List<Product> productsList = getAllProducts();
-
-        for (Product iProduct: productsList) {
-            if (iProduct.getId() == id){
-                productsList.remove(id);
-                break;
-            }
-        }
+        productsList.removeIf(product -> product.getId().equals(id));
         saveProducts(productsList);
     }
 
     public void removeProductByName(String productName) throws IOException {
         List<Product> productList = getAllProducts();
-
-        for (Product iProduct: productList){
-            if (iProduct.getProductName().equals(productName)){
-                productList.remove(iProduct);
-                break;
-            }
-        }
+        productList.removeIf(product -> product.getProductName().equals(productName));
         saveProducts(productList);
     }
 
     public List<Product> getAllProducts() throws IOException {
-        List<Product> productList = new ArrayList<Product>();
-
-        FileReader fileReader = new FileReader(fileName);
-        BufferedReader reader = new BufferedReader(fileReader);
-        String readOneLineFromFile = reader.readLine();
-        while(readOneLineFromFile != null) {
-            Product product = ProductParser.convertStringToProduct(productType, readOneLineFromFile);
-//            System.out.println(readOneLineFromFile);
-            readOneLineFromFile = reader.readLine();
-            if (product !=null ){
-                productList.add(product);
-            }
-        }
-        reader.close();
+        List<Product> productList = new ArrayList<>();
+        List<String> test = Files.lines(Paths.get(fileName))
+                .collect(Collectors.toList());
+        test.stream().map(ProductParser::convertStringToProduct)
+                .forEach(product -> {
+                    if (product != null){
+                        productList.add(product);
+                    }
+                });
         return productList;
     }
 
 
-    public Product getProductById(long id) throws IOException {
+    public Product getProductById(Long id) throws IOException {
         List<Product> productList = getAllProducts();
-
-        for (Product iProduct:productList) {
-            if (iProduct.getId() == id){
-                return iProduct;
-            }
-        }
-        return null;
+        Product searchedProduct = productList.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
+        return searchedProduct;
     }
 
     public Product getProductByName(String productName) throws IOException {
         List<Product> productList = getAllProducts();
+        Product searchedProduct = productList.stream().filter(product -> ProductParser.toUpperCase(product.getProductName()).equals(ProductParser.toUpperCase(productName))).findFirst().orElse(null);
+        return searchedProduct;
 
-        for (Product iProduct : productList) {
-            if(ProductParser.toUpperCase(productName).equals(ProductParser.toUpperCase(iProduct.getProductName()))) {
-                return iProduct;
-            }
-        }
-        return null;
     }
 
-
-
+    public Long setId() throws IOException {
+        List<Product> productList = getAllProducts();
+        return productList.size() + 1L;
+    }
 
 }

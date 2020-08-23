@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface ProductDAO {
 
-    void saveProduct(Product product) throws FileNotFoundException, IOException;
+    void saveProduct(Product product) throws IOException;
     void saveProducts(List<Product> products) throws FileNotFoundException;
-    void removeProductById(long id) throws FileNotFoundException, IOException;
-    void removeProductByName(String productName) throws FileNotFoundException, IOException;
 
-    List<Product> getAllProducts() throws FileNotFoundException, IOException;
-    Product getProductById(long id) throws IOException;
-    Product getProductByName(String productName) throws IOException;
+    void removeProductById(Long id) throws IOException;
+    void removeProductByName(String productName) throws IOException;
+
+    List<Product> getAllProducts() throws  IOException;
+
 }
