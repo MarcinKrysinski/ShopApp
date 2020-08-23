@@ -48,26 +48,12 @@ public class ProductServiceImpl implements ProductService {
             return false;
         }).filter(product -> product.getProductName().equals(productName)).findFirst().orElse(null);
         return searchedProductByName;
-//        for (Product product : products) {
-//            boolean isFoundProduct = product.getProductName().equals(productName);
-//            if (isFoundProduct) {
-//                return product;
-//            }
-//        }
-//        return null;
     }
 
     public Product getProductById(Long id) throws IOException {
         List<Product> products = getAllProducts();
         return products.stream().filter(product -> product.getId().equals(id))
                 .findFirst().orElse(null);
-//        for (Product product : products) {
-//            boolean isFoundProduct = product.getId().equals(id);
-//            if (isFoundProduct) {
-//                return product;
-//            }
-//        }
-//        return null;
     }
 
     public boolean isProductAvailable(String productName) throws IOException {
@@ -76,12 +62,6 @@ public class ProductServiceImpl implements ProductService {
         return productList.stream()
                 .filter(product -> product.getProductName().equals(productName))
                 .anyMatch(product -> (isExist && product.getProductCount()>0));
-//        for (Product product : getAllProducts()) {
-//            if (isProductExist(productName) && product.getProductCount() > 0) {
-//                return true;
-//            }
-//        }
-//        return false;
     }
 
     public boolean isProductExist(String productName) throws IOException {

@@ -53,14 +53,6 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
        List<User> users = getAllUsers();
        return users.stream().filter(user -> user.getId().equals(id)).findAny().orElse(null);
-
-//        for (User user: users) {
-//            boolean isFoundUser = user.getId().equals(id);
-//            if (isFoundUser){
-//                return user;
-//            }
-//        }
-//        return null;
     }
 
     public User getUserByLogin(String login) {
@@ -68,14 +60,6 @@ public class UserServiceImpl implements UserService {
             users = getAllUsers();
             return users.stream().filter(user -> user.getLogin().equals(login))
                     .findFirst().orElse(null);
-//            for (User user : users) {
-//                boolean isFoundUser = user.getLogin().equals(login);
-//                if (isFoundUser) {
-//                    return user;
-//                }
-//
-//            }
-//        return null;
     }
 
     public boolean isCorrectLoginAndPassword(String login, String password){

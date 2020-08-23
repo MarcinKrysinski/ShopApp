@@ -51,25 +51,12 @@ public class ProductDAOImpl implements ProductDAO {
     public void removeProductById(Long id) throws IOException {
         List<Product> productsList = getAllProducts();
         productsList.removeIf(product -> product.getId().equals(id));
-//        for (Product iProduct: productsList) {
-//            if (iProduct.getId().equals(id)){
-//                productsList.remove(id);
-//                break;
-//            }
-//        }
         saveProducts(productsList);
     }
 
     public void removeProductByName(String productName) throws IOException {
         List<Product> productList = getAllProducts();
         productList.removeIf(product -> product.getProductName().equals(productName));
-
-//        for (Product iProduct: productList){
-//            if (iProduct.getProductName().equals(productName)){
-//                productList.remove(iProduct);
-//                break;
-//            }
-//        }
         saveProducts(productList);
     }
 
@@ -83,19 +70,6 @@ public class ProductDAOImpl implements ProductDAO {
                         productList.add(product);
                     }
                 });
-
-
-//        FileReader fileReader = new FileReader(fileName);
-//        BufferedReader reader = new BufferedReader(fileReader);
-//        String readOneLineFromFile = reader.readLine();
-//        while(readOneLineFromFile != null) {
-//            Product product = ProductParser.convertStringToProduct(readOneLineFromFile);
-//            if (product != null){
-//                productList.add(product);
-//            }
-//            readOneLineFromFile = reader.readLine();
-//        }
-//        reader.close();
         return productList;
     }
 
@@ -104,12 +78,7 @@ public class ProductDAOImpl implements ProductDAO {
         List<Product> productList = getAllProducts();
         Product searchedProduct = productList.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
         return searchedProduct;
-//        for (Product iProduct:productList) {
-//            if (iProduct.getId().equals(id)){
-//                return iProduct;
-//            }
-//        }
-//        return null;
+
     }
 
     public Product getProductByName(String productName) throws IOException {
@@ -117,15 +86,6 @@ public class ProductDAOImpl implements ProductDAO {
         Product searchedProduct = productList.stream().filter(product -> ProductParser.toUpperCase(product.getProductName()).equals(ProductParser.toUpperCase(productName))).findFirst().orElse(null);
         return searchedProduct;
 
-//        for (Product iProduct : productList) {
-//            if(ProductParser.toUpperCase(productName).equals(ProductParser.toUpperCase(iProduct.getProductName()))) {
-//                return iProduct;
-//            }
-//        }
-//        return null;
     }
-
-
-
 
 }
