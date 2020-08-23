@@ -1,7 +1,6 @@
 # ShopApp Application written in Java
 
-## Technologies and patterns
-
+## About
 
 Store management application where you can manage products by dividing products into categories and assigning them different parameters.
 
