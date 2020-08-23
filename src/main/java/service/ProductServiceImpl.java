@@ -48,14 +48,12 @@ public class ProductServiceImpl implements ProductService {
             return false;
         }).filter(product -> product.getProductName().equals(productName)).findFirst().orElse(null);
         return searchedProductByName;
-
     }
 
     public Product getProductById(Long id) throws IOException {
         List<Product> products = getAllProducts();
         return products.stream().filter(product -> product.getId().equals(id))
                 .findFirst().orElse(null);
-
     }
 
     public boolean isProductAvailable(String productName) throws IOException {

@@ -78,6 +78,7 @@ public class ProductDAOImpl implements ProductDAO {
         List<Product> productList = getAllProducts();
         Product searchedProduct = productList.stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null);
         return searchedProduct;
+
     }
 
     public Product getProductByName(String productName) throws IOException {

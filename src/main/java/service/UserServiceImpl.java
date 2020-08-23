@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
        List<User> users = getAllUsers();
        return users.stream().filter(user -> user.getId().equals(id)).findAny().orElse(null);
-
     }
 
     public User getUserByLogin(String login) {
